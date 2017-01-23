@@ -45,6 +45,14 @@ namespace AddressBookApi
                     .AddJsonOptions(a => a.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver());
 
             services.AddSingleton<IContactRepository, ContactRepository>();
+
+            // Inject an implementation of ISwaggerProvider with defaulted settings applied
+            //services.AddSwaggerGen();
+            services.AddSwaggerGen(c=>c.SingleApiVersion(new Swashbuckle.Swagger.Model.Info { Title = "Address Book API", Version = "v1"}));
+            //services.AddSwaggerGen(c =>
+            //{
+            //    c.SwaggerDoc("v1", new Info { Title = "Addressbook API", Version = "v1" });
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -54,14 +62,18 @@ namespace AddressBookApi
             loggerFactory.AddDebug();
             //Use the new policy globally
             app.UseCors("AllowAll");
-            app.UseMvc();
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute("blog", "persons/{*employees}",
-            //             defaults: new { controller = "persons", action = "employees" });
-            //    routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-            //});
+             //app.UseMvcWithDefaultRoute();
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute("default", "{controller=contacts}/{action=Index}/{id?}");
+            });
             ConfigureMappings();
+
+            // Enable middleware to serve generated Swagger as a JSON endpoint
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui assets (HTML, JS, CSS etc.)
+            app.UseSwaggerUi();
         }
 
         private static void ConfigureMappings()

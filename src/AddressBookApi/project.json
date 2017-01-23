@@ -16,8 +16,8 @@
     "Microsoft.Extensions.Logging.Debug": "1.0.0",
     "Microsoft.Extensions.Options.ConfigurationExtensions": "1.0.0",
     "Model": "1.0.0-*",
-    "AutoMapper": "5.2.0"
-  },
+    "AutoMapper": "5.2.0",
+    "Swashbuckle": "6.0.0-beta902"},
 
   "tools": {
     "Microsoft.AspNetCore.Server.IISIntegration.Tools": "1.0.0-preview2-final"
